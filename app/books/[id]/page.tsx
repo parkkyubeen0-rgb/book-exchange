@@ -134,11 +134,20 @@ export default async function BookDetailPage({ params }: BookDetailPageProps) {
                     </Button>
                   )}
                   {isOwner && (
-                    <Button variant="outline" asChild>
-                      <Link href={`/my-books/${book.id}/edit`}>
-                        수정하기
-                      </Link>
-                    </Button>
+                    <div className="flex flex-wrap gap-3">
+                      {book.file_url && (
+                        <Button variant="secondary" asChild>
+                          <Link href={`/api/books/${book.id}/download`} target="_blank">
+                            다운로드
+                          </Link>
+                        </Button>
+                      )}
+                      <Button variant="outline" asChild>
+                        <Link href={`/my-books/${book.id}/edit`}>
+                          수정하기
+                        </Link>
+                      </Button>
+                    </div>
                   )}
                 </div>
               </CardContent>

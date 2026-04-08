@@ -20,7 +20,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Book, GENRE_LABELS } from '@/lib/types'
-import { BookOpen, Pencil, Trash2, Eye, EyeOff, Loader2 } from 'lucide-react'
+import { BookOpen, Pencil, Trash2, Eye, EyeOff, Loader2, Download } from 'lucide-react'
 
 interface MyBookCardProps {
   book: Book
@@ -134,6 +134,14 @@ export function MyBookCard({ book }: MyBookCardProps) {
               )}
             </Button>
 
+            {book.file_url && (
+              <Button variant="secondary" size="sm" asChild>
+                <Link href={`/api/books/${book.id}/download`} target="_blank">
+                  <Download className="h-4 w-4 mr-1" />
+                  다운로드
+                </Link>
+              </Button>
+            )}
             <Button variant="outline" size="sm" asChild>
               <Link href={`/my-books/${book.id}/edit`}>
                 <Pencil className="h-4 w-4 mr-1" />

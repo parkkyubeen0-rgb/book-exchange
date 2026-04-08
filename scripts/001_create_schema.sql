@@ -111,7 +111,11 @@ BEGIN
   INSERT INTO public.profiles (id, nickname)
   VALUES (
     NEW.id,
-    COALESCE(NEW.raw_user_meta_data ->> 'nickname', 'User')
+    COALESCE(
+      NEW.raw_user_meta_data ->> 'nickname',
+      split_part(NEW.email, '@', 1),
+      '익명'
+    )
   )
   ON CONFLICT (id) DO NOTHING;
   RETURN NEW;

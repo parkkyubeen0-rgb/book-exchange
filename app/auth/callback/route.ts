@@ -11,6 +11,19 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     
     if (!error) {
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (user) {
+        const nickname =
+          user.user_metadata?.nickname ||
+          user.email?.split('@')[0] ||
+          '익명'
+
+        await supabase
+          .from('profiles')
+          .upsert({ id: user.id, nickname })
+      }
+
       return NextResponse.redirect(`${origin}${next}`)
     }
   }
